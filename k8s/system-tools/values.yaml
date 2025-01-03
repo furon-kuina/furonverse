@@ -1,0 +1,9 @@
+metadata:
+  namespace: argocd
+spec:
+  project: default
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: https://github.com/furon-kuina/furonverse
+    targetRevision: HEAD

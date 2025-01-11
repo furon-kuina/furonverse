@@ -1,22 +1,22 @@
-apiVersion: argoproj.io/v1alpha1
-kind: Application
-metadata:
-  name: contour
-  namespace: {{ .Values.metadata.namespace }}
-spec:
-  destination:
-    namespace: projectcontour
-    server: {{ .Values.spec.destination.server }}
-  project: {{ .Values.spec.project }}
-  sources:
-  - repoURL: https://github.com/projectcontour/contour
-    path: examples/render
-    targetRevision: v1.30.1
-  - repoURL: {{ .Values.spec.source.repoURL }}
-    path: k8s/system/manifests/contour
-  syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
-    automated:
-      selfHeal: true
-      prune: true
+# apiVersion: argoproj.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: contour
+#   namespace: {{ .Values.metadata.namespace }}
+# spec:
+#   destination:
+#     namespace: projectcontour
+#     server: {{ .Values.spec.destination.server }}
+#   project: {{ .Values.spec.project }}
+#   sources:
+#   - repoURL: https://github.com/projectcontour/contour
+#     path: examples/render
+#     targetRevision: v1.30.1
+#   - repoURL: {{ .Values.spec.source.repoURL }}
+#     path: k8s/system/manifests/contour
+#   syncPolicy:
+#     syncOptions:
+#     - CreateNamespace=true
+#     automated:
+#       selfHeal: true
+#       prune: true

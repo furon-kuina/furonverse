@@ -13,9 +13,8 @@ spec:
     path: charts/gateway-helm
     targetRevision: v1.2.4
     helm:
-      valuesObject:
-        service:
-          annotations: {}
+      valueFiles:
+      - ./envoy-gateway/values.yaml
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

@@ -12,6 +12,9 @@ spec:
   - repoURL: docker.io/envoyproxy
     chart: gateway-helm
     targetRevision: v1.2.4
+  - path: k8s/system/manifests/envoy-gateway
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

@@ -9,15 +9,9 @@ spec:
     server: {{ .Values.spec.destination.server }}
   project: {{ .Values.spec.project }}
   sources:
-  - repoURL: https://github.com/envoyproxy/gateway
-    path: charts/gateway-helm
+  - repoURL: docker.io/envoyproxy
+    chart: gateway-helm
     targetRevision: v1.2.4
-    helm:
-      valueFiles:
-      - $repo/k8s/system/manifests/envoy-gateway/values.yaml
-  - repoURL: {{ .Values.spec.source.repoURL }}
-    targetRevision: {{ .Values.spec.source.targetRevision }}
-    ref: repo
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

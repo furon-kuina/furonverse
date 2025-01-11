@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+  name: argocd-cm
+data:
+  # Fix to ArgoCD stucking in Progressing state
+  # cf: https://sublimer.hatenablog.com/entry/2022/07/24/162750
+  resource.customizations.health.Service: |
+    hs = {}
+    if obj.status ~= nil then
+      if obj.status.loadBalancer ~= nil then
+        hs.status = "Healthy"
+        hs.message = "LoadBalancer status is healthy"
+        return hs
+      end
+    end
+
+    hs.status = "Progressing"
+    hs.message = "Waiting for LoadBalancer"
+    return hs

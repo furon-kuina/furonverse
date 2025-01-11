@@ -9,8 +9,8 @@ spec:
     server: {{ .Values.spec.destination.server }}
   project: {{ .Values.spec.project }}
   sources:
-  - repoURL: https://projectcontour.io
-    path: quickstart/contour-gateway-provisioner.yaml
+  - repoURL: https://github.com/projectcontour/contour
+    path: examples/render
     targetRevision: 1.30.1
   syncPolicy:
     syncOptions:

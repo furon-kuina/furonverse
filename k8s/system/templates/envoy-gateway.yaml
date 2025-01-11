@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: contour
+  name: envoy-gateway
   namespace: {{ .Values.metadata.namespace }}
 spec:
   destination:
-    namespace: projectcontour
+    namespace: envoy-gateway-system
     server: {{ .Values.spec.destination.server }}
   project: {{ .Values.spec.project }}
   sources:
-  - repoURL: https://charts.bitnami.com/bitnami
-    chart: contour
-    targetRevision: 19.5.0
+  - repoURL: oci://docker.io/envoyproxy/gateway-helm
+    chart: gateway-helm
+    targetRevision: v1.2.4
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

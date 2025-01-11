@@ -14,7 +14,10 @@ spec:
     targetRevision: v1.2.4
     helm:
       valueFiles:
-      - ./envoy-gateway/values.yaml
+      - $repo/k8s/system/manifests/envoy-gateway/values.yaml
+  - repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+    ref: repo
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

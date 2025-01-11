@@ -9,8 +9,8 @@ spec:
     server: {{ .Values.spec.destination.server }}
   project: {{ .Values.spec.project }}
   sources:
-  - repoURL: oci://docker.io/envoyproxy/gateway-helm
-    chart: gateway-helm
+  - repoURL: https://github.com/envoyproxy/gateway
+    path: charts/gateway-helm
     targetRevision: v1.2.4
   syncPolicy:
     syncOptions:

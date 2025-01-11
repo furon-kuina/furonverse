@@ -8,7 +8,7 @@ spec:
     namespace: projectcontour
     server: {{ .Values.spec.destination.server }}
   project: {{ .Values.spec.project }}
-  source:
+  sources:
   - repoURL: https://projectcontour.io
     path: quickstart/contour-gateway-provisioner.yaml
     targetRevision: 1.30.1

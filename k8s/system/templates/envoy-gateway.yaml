@@ -12,6 +12,10 @@ spec:
   - repoURL: https://github.com/envoyproxy/gateway
     path: charts/gateway-helm
     targetRevision: v1.2.4
+    helm:
+      valuesObject:
+        service:
+          annotations: {}
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

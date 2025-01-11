@@ -11,7 +11,7 @@ spec:
   sources:
   - repoURL: https://github.com/projectcontour/contour
     path: examples/render
-    targetRevision: "1.30"
+    targetRevision: v1.30.1
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

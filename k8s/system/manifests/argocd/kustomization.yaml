@@ -20,7 +20,7 @@ patches: # adjusted to the cluster's worker node count
     - op: replace
       path: /spec/replicas
       value: 2
-- path: ./config/patches/argocd-cm.yaml
+- path: ./patches/argocd-cm.yaml
   target:
     kind: ConfigMap
     name: argocd-cm

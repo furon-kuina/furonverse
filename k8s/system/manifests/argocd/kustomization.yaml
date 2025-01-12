@@ -5,6 +5,7 @@ resources:
 - github.com/argoproj/argo-cd//manifests/ha/cluster-install?ref=v2.13.3
 - ./ns.yaml
 - ./appproject.yaml
+- ./httproute.yaml
 patches: # adjusted to the cluster's worker node count
 - target:
     kind: StatefulSet

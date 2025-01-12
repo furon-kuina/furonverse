@@ -27,11 +27,3 @@ data:
     hs.status = "Healthy"
     hs.message = "GatewayClass status is healthy"
     return hs
-  dex.config: |
-    connectors:
-      - type: github
-        id: github
-        name: GitHub
-        config:
-          clientID: Ov23liT9pUDAlZ7XcVHu
-          clientSecret: $dex.github.clientSecret

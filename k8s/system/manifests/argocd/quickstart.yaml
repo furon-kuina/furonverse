@@ -62,15 +62,9 @@ spec:
     - name: eg
       namespace: envoy-gateway-system
   hostnames:
-    - "www.argocd.example.com"
+    - argocd.furonverse.com
   rules:
     - backendRefs:
-        - group: ""
-          kind: Service
-          name: backend
-          port: 3000
-          weight: 1
-      matches:
-        - path:
-            type: PathPrefix
-            value: /
+        - kind: Service
+          name: argocd-server
+          port: 80

@@ -60,6 +60,7 @@ metadata:
 spec:
   parentRefs:
     - name: eg
+      namespace: envoy-gateway-system
   hostnames:
     - "www.argocd.example.com"
   rules:

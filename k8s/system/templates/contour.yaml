@@ -1,24 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: envoy-gateway
+  name: contour
   namespace: {{ .Values.metadata.namespace }}
 spec:
   destination:
-    namespace: envoy-gateway-system
+    namespace: projectcontour
     server: {{ .Values.spec.destination.server }}
   project: {{ .Values.spec.project }}
   sources:
-  - repoURL: docker.io/envoyproxy
-    chart: gateway-helm
-    targetRevision: v1.2.4
-  - path: k8s/system/manifests/envoy-gateway
-    repoURL: {{ .Values.spec.source.repoURL }}
-    targetRevision: {{ .Values.spec.source.targetRevision }}
+  - chart: contour
+    repoURL: registry-1.docker.io/bitnamicharts
+    targetRevision: 19.5.0
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
-    - Replace=true 
     automated:
       selfHeal: true
       prune: true

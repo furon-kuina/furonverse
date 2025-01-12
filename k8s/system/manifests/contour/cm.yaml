@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  contour.yaml: |-
+    gateway:
+      controllerName: projectcontour.io/gateway-controller
+kind: ConfigMap
+metadata:
+  name: contour
+  namespace: projectcontour

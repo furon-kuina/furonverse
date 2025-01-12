@@ -14,9 +14,7 @@ spec:
     targetRevision: 19.5.0
     helm:
       valuesObject:
-        configInline:
-          gateway:
-            controllerName: projectcontour.io/gateway-controller
+        existingConfigMap: contour
   - path: k8s/system/manifests/contour
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}

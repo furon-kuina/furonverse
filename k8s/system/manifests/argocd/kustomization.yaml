@@ -6,7 +6,7 @@ resources:
 - ./ns.yaml
 - ./appproject.yaml
 - ./httproute.yaml
-- ./quickstart.yaml
+- ./externalsecrets.yaml
 patches: # adjusted to the cluster's worker node count
 - target:
     kind: StatefulSet

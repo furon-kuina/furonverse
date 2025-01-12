@@ -6,6 +6,7 @@ metadata:
     app.kubernetes.io/part-of: argocd
   name: argocd-cm
 data:
+  url: https://argocd.furonverse.com
   # Fix to ArgoCD stucking in Progressing state
   # cf: https://sublimer.hatenablog.com/entry/2022/07/24/162750
   resource.customizations.health.Service: |
@@ -26,3 +27,11 @@ data:
     hs.status = "Healthy"
     hs.message = "GatewayClass status is healthy"
     return hs
+  dex.config: |
+    connectors:
+      - type: github
+        id: github
+        name: GitHub
+        config:
+          clientID: Ov23liT9pUDAlZ7XcVHu
+          clientSecret: $dex.github.clientSecret

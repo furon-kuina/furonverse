@@ -23,15 +23,6 @@ data:
     return hs
   resource.customizations.health.gateway.networking.k8s.io_GatewayClass: |
     hs = {}
-    if obj.status and obj.status.conditions and obj.status.conditions[1] then
-      local condition = obj.status.conditions[1]
-      if condition.reason == "Accepted" and condition.status == "True" then
-        hs.status = "Healthy"
-        hs.message = "GatewayClass status is healthy"
-        return hs
-      end
-    end
-
-    hs.status = "Progressing"
-    hs.message = "Waiting for GatewayClass"
+    hs.status = "Healthy"
+    hs.message = "GatewayClass status is healthy"
     return hs

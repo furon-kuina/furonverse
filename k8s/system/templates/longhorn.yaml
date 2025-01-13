@@ -12,6 +12,10 @@ spec:
   - repoURL: https://charts.longhorn.io
     chart: longhorn
     targetRevision: "1.5.1"
+    helm:
+      valuesObject:
+        persistence:
+          defaultClassReplicaCount: 2
   - path: k8s/system/manifests/longhorn
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}

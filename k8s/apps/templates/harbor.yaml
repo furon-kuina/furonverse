@@ -1,18 +1,15 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: longhorn
+  name: harbor
   namespace: {{ .Values.metadata.namespace }}
 spec:
   destination:
-    namespace: longhorn-system
+    namespace: harbor
     server: {{ .Values.spec.destination.server }}
   project: {{ .Values.spec.project }}
-  sources:
-  - repoURL: https://charts.longhorn.io
-    chart: longhorn
-    targetRevision: "1.5.1"
-  - path: k8s/system/manifests/longhorn
+  source:
+    path: k8s/apps/manifests/harbor
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
   syncPolicy:

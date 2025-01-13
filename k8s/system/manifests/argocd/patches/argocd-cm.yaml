@@ -22,7 +22,7 @@ data:
     hs.status = "Progressing"
     hs.message = "Waiting for LoadBalancer"
     return hs
-  resource.customizations.health.gateway.networking.k8s.io_GatewayClass: |
+  resource.customizations.health.gateway.networking.k8s.io_GatewayClass: | # TODO: fix the script
     hs = {}
     hs.status = "Healthy"
     hs.message = "GatewayClass status is healthy"

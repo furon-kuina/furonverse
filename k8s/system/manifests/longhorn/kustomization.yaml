@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: longhorn-system
 resources:
 - ns.yaml
+- httproute.yaml
 patches:
 - path: ./patches/longhorn-default-setting.yaml
   target:

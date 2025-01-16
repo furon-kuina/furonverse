@@ -28,7 +28,7 @@ spec:
         args:
         - --token
         - $(CLOUDFLARE_TUNNEL_TOKEN)
-        image: cloudflare/cloudflared:latest
+        image: cloudflare/cloudflared:2025.1.0
         name: cloudflared
         livenessProbe:
           httpGet:

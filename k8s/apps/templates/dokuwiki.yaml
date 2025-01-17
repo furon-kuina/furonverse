@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dokuwiki
+  namespace: {{ .Values.metadata.namespace }}
+spec:
+  destination:
+    namespace: dokuwiki
+    server: {{ .Values.spec.destination.server }}
+  project: {{ .Values.spec.project }}
+  sources:
+  - chart: dokuwiki
+    repoURL: registry-1.docker.io/bitnamicharts
+    targetRevision: 16.2.11
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true

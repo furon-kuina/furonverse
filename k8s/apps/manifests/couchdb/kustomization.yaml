@@ -3,3 +3,4 @@ kind: Kustomization
 namespace: couchdb
 resources:
 - ./ns.yaml
+- ./httproute.yaml

@@ -24,37 +24,6 @@ spec:
                   app: dokuwiki
               topologyKey: kubernetes.io/hostname
             weight: 1
-      initContainers:
-      - args:
-        - -ec
-        - |
-          #!/bin/bash
-
-          . /opt/bitnami/scripts/liblog.sh
-          . /opt/bitnami/scripts/libfs.sh
-
-          info "Copying base dir to empty dir"
-          # In order to not break the application functionality (such as upgrades or plugins) we need
-          # to make the base directory writable, so we need to copy it to an empty dir volume
-          cp -r --preserve=mode /opt/bitnami/dokuwiki /emptydir/app-base-dir
-
-          info "Copying symlinks to stdout/stderr"
-          # We copy the logs folder because it has symlinks to stdout and stderr
-          if ! is_dir_empty /opt/bitnami/apache/logs; then
-            cp -r /opt/bitnami/apache/logs /emptydir/apache-logs-dir
-          fi
-          info "Copying php var directory"
-          if ! is_dir_empty /opt/bitnami/php/var; then
-            cp -r /opt/bitnami/php/var /emptydir/php-var-dir
-          fi
-          info "Copy operation completed"
-        command:
-        - /bin/bash
-        image: dokuwiki/dokuwiki:2024-02-06b
-        name: prepare-base-dir
-        volumeMounts:
-        - mountPath: /emptydir
-          name: empty-dir
       containers:
       - image: dokuwiki/dokuwiki:2024-02-06b
         name: dokuwiki

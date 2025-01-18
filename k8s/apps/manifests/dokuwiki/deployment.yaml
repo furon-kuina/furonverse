@@ -1,0 +1,136 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: dokuwiki
+  name: dokuwiki
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dokuwiki
+  template:
+    metadata:
+      labels:
+        app: dokuwiki
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  app: dokuwiki
+              topologyKey: kubernetes.io/hostname
+            weight: 1
+      initContainers:
+      - args:
+        - -ec
+        - |
+          #!/bin/bash
+
+          . /opt/bitnami/scripts/liblog.sh
+          . /opt/bitnami/scripts/libfs.sh
+
+          info "Copying base dir to empty dir"
+          # In order to not break the application functionality (such as upgrades or plugins) we need
+          # to make the base directory writable, so we need to copy it to an empty dir volume
+          cp -r --preserve=mode /opt/bitnami/dokuwiki /emptydir/app-base-dir
+
+          info "Copying symlinks to stdout/stderr"
+          # We copy the logs folder because it has symlinks to stdout and stderr
+          if ! is_dir_empty /opt/bitnami/apache/logs; then
+            cp -r /opt/bitnami/apache/logs /emptydir/apache-logs-dir
+          fi
+          info "Copying php var directory"
+          if ! is_dir_empty /opt/bitnami/php/var; then
+            cp -r /opt/bitnami/php/var /emptydir/php-var-dir
+          fi
+          info "Copy operation completed"
+        command:
+        - /bin/bash
+        image: dokuwiki/dokuwiki:2024-02-06b
+        name: prepare-base-dir
+        volumeMounts:
+        - mountPath: /emptydir
+          name: empty-dir
+      containers:
+      - image: dokuwiki/dokuwiki:2024-02-06b
+        name: dokuwiki
+        env:
+        - name: DOKUWIKI_USERNAME
+          value: user
+        - name: DOKUWIKI_FULL_NAME
+          value: User Name
+        - name: DOKUWIKI_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: dokuwiki-password
+              name: dokuwiki
+        - name: DOKUWIKI_EMAIL
+          value: user@example.com
+        - name: DOKUWIKI_WIKI_NAME
+          value: My Wiki
+        - name: APACHE_HTTP_PORT_NUMBER
+          value: "8080"
+        - name: APACHE_HTTPS_PORT_NUMBER
+          value: "8443"
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 8443
+          name: https
+          protocol: TCP
+        readinessProbe:
+          failureThreshold: 6
+          httpGet:
+            path: /doku.php
+            port: http
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 5
+        livenessProbe:
+          failureThreshold: 6
+          initialDelaySeconds: 120
+          periodSeconds: 10
+          successThreshold: 1
+          tcpSocket:
+            port: http
+          timeoutSeconds: 5
+        volumeMounts:
+        - mountPath: /opt/bitnami/apache/conf
+          name: empty-dir
+          subPath: apache-conf-dir
+        - mountPath: /opt/bitnami/apache/logs
+          name: empty-dir
+          subPath: apache-logs-dir
+        - mountPath: /opt/bitnami/apache/var/run
+          name: empty-dir
+          subPath: apache-tmp-dir
+        - mountPath: /opt/bitnami/php/etc
+          name: empty-dir
+          subPath: php-conf-dir
+        - mountPath: /opt/bitnami/php/tmp
+          name: empty-dir
+          subPath: php-tmp-dir
+        - mountPath: /opt/bitnami/php/var
+          name: empty-dir
+          subPath: php-var-dir
+        - mountPath: /tmp
+          name: empty-dir
+          subPath: tmp-dir
+        - mountPath: /opt/bitnami/dokuwiki
+          name: empty-dir
+          subPath: app-base-dir
+        - mountPath: /bitnami/dokuwiki
+          name: dokuwiki-data
+      volumes:
+      - emptyDir: {}
+        name: empty-dir
+      - name: dokuwiki-data
+        persistentVolumeClaim:
+          claimName: dokuwiki

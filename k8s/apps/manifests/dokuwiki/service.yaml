@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: "2025-01-17T15:30:25Z"
+  name: dokuwiki
+  namespace: dokuwiki
+spec:
+  ports:
+  - name: http
+    nodePort: 31052
+    port: 80
+    protocol: TCP
+    targetPort: http
+  - name: https
+    nodePort: 30218
+    port: 443
+    protocol: TCP
+    targetPort: https
+  selector:
+    app: dokuwiki
+  type: ClusterIP

@@ -9,9 +9,9 @@ spec:
     server: {{ .Values.spec.destination.server }}
   project: {{ .Values.spec.project }}
   sources:
-  - chart: dokuwiki
-    repoURL: registry-1.docker.io/bitnamicharts
-    targetRevision: 16.2.11
+  - path: k8s/apps/manifests/dokuwiki
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

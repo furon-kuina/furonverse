@@ -27,24 +27,6 @@ spec:
       containers:
       - image: dokuwiki/dokuwiki:2024-02-06b
         name: dokuwiki
-        env:
-        - name: DOKUWIKI_USERNAME
-          value: user
-        - name: DOKUWIKI_FULL_NAME
-          value: User Name
-        - name: DOKUWIKI_PASSWORD
-          valueFrom:
-            secretKeyRef:
-              key: dokuwiki-password
-              name: dokuwiki
-        - name: DOKUWIKI_EMAIL
-          value: user@example.com
-        - name: DOKUWIKI_WIKI_NAME
-          value: My Wiki
-        - name: APACHE_HTTP_PORT_NUMBER
-          value: "8080"
-        - name: APACHE_HTTPS_PORT_NUMBER
-          value: "8443"
         ports:
         - containerPort: 8080
           name: http

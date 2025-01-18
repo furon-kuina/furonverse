@@ -12,6 +12,9 @@ spec:
   - chart: couchdb
     repoURL: https://apache.github.io/couchdb-helm
     targetRevision: 4.5.6
+    helm:
+      valuesObject:
+        couchdbConfig.couchdb.uuid: 2b83ffe8b135492ebc6ff149b57ae9b4
   - path: k8s/apps/manifests/couchdb
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}

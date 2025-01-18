@@ -4,3 +4,4 @@ namespace: couchdb
 resources:
 - ./ns.yaml
 - ./httproute.yaml
+- ./external-secrets.yaml

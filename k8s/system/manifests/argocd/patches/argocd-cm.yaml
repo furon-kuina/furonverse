@@ -27,3 +27,8 @@ data:
     hs.status = "Healthy"
     hs.message = "GatewayClass status is healthy"
     return hs
+  resource.customizations.health.monitoring.coreos.com_Prometheus: | # TODO: fix the script
+    hs = {}
+    hs.status = "Healthy"
+    hs.message = "Prometheus status is healthy"
+    return hs

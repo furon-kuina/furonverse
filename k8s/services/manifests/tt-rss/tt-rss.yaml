@@ -1,0 +1,81 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+        - name: db
+          image: postgres:15-alpine
+          envFrom:
+            - secretRef:
+                name: ttrss-secrets
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: db-storage
+      volumes:
+        - name: db-storage
+          persistentVolumeClaim:
+            claimName: db-pvc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+        - name: app
+          image: cthulhoo/ttrss-fpm-pgsql-static:21.04-3e2236896
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: app-storage
+      volumes:
+        - name: app-storage
+          persistentVolumeClaim:
+            claimName: app-pvc
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: updater
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: updater
+  template:
+    metadata:
+      labels:
+        app: updater
+    spec:
+      containers:
+        - name: updater
+          image: cthulhoo/ttrss-fpm-pgsql-static:21.04-3e2236896
+          envFrom:
+            - configMapRef:
+                name: ttrss-config
+          volumeMounts:
+            - mountPath: /var/www/html
+              name: app-storage
+          command: ["/opt/tt-rss/updater.sh"]
+      volumes:
+        - name: app-storage
+          persistentVolumeClaim:
+            claimName: app-pvc

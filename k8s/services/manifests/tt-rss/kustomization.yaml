@@ -6,5 +6,6 @@ resources:
 - ./httproute.yaml
 - ./external-secrets.yaml
 - ./pvc.yaml
-- ./nginx.yaml
 - ./tt-rss.yaml
+- ./cm.yaml
+- ./service.yaml

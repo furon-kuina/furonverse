@@ -90,6 +90,9 @@ spec:
             - mountPath: /var/www/html
               name: app-storage
               readOnly: true
+          env:
+          - name: RESOLVER
+            value: kube-dns.kube-system.svc.cluster.local
           ports:
             - containerPort: 80
       volumes:

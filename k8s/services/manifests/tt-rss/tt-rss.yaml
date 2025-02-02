@@ -68,6 +68,8 @@ spec:
                 secretKeyRef:
                   name: app-secret
                   key: ADMIN_USER_PASS
+            - name: TTRSS_SELF_URL_PATH
+              value: https://ttrss.furonverse.com/tt-rss/
         - name: updater
           image: cthulhoo/ttrss-fpm-pgsql-static:59b94a9e
           volumeMounts:

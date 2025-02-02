@@ -93,6 +93,8 @@ spec:
           env:
           - name: RESOLVER
             value: kube-dns.kube-system.svc.cluster.local
+          - name: APP_UPSTREAM
+            value: 127.0.0.1
           ports:
             - containerPort: 80
       volumes:

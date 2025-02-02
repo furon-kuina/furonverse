@@ -35,7 +35,7 @@ spec:
         createAdminSecret: false
 
 
-  - path: k8s/apps/manifests/couchdb
+  - path: k8s/services/manifests/couchdb
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
   syncPolicy:

@@ -2,46 +2,46 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: prometheus-stack
-  namespace: {{ .Values.metadata.namespace }}
+  namespace: {? {.Values.metadata.namespace: ''} : ''}
 spec:
   destination:
     namespace: prometheus
-    server: {{ .Values.spec.destination.server }}
-  project: {{ .Values.spec.project }}
+    server: {? {.Values.spec.destination.server: ''} : ''}
+  project: {? {.Values.spec.project: ''} : ''}
   sources:
-  - chart: kube-prometheus-stack
-    repoURL: https://prometheus-community.github.io/helm-charts
-    targetRevision: 68.3.2
-    helm:
-      valuesObject:
-        grafana:
-          persistence:
-            enabled: true
-            type: sts
-            storageClassName: longhorn
-            accessModes:
-              - ReadWriteOnce
-            size: 1Gi
-            finalizers:
-              - kubernetes.io/pvc-protection
-        prometheus:
-          prometheusSpec:
-            # PVC is only created when prometheus operator is created
-            storageSpec:
-              volumeClaimTemplate:
-                spec:
-                  storageClassName: longhorn
-                  accessModes: 
-                  - ReadWriteOnce
-                  resources:
-                    requests:
-                      storage: 10Gi
-  - path: k8s/system/manifests/prometheus-stack
-    repoURL: {{ .Values.spec.source.repoURL }}
-    targetRevision: {{ .Values.spec.source.targetRevision }}
+    - chart: kube-prometheus-stack
+      repoURL: https://prometheus-community.github.io/helm-charts
+      targetRevision: 68.3.2
+      helm:
+        valuesObject:
+          grafana:
+            persistence:
+              enabled: true
+              type: sts
+              storageClassName: longhorn
+              accessModes:
+                - ReadWriteOnce
+              size: 1Gi
+              finalizers:
+                - kubernetes.io/pvc-protection
+          prometheus:
+            prometheusSpec:
+              # PVC is only created when prometheus operator is created
+              storageSpec:
+                volumeClaimTemplate:
+                  spec:
+                    storageClassName: longhorn
+                    accessModes:
+                      - ReadWriteOnce
+                    resources:
+                      requests:
+                        storage: 10Gi
+    - path: k8s/system/manifests/prometheus-stack
+      repoURL: {? {.Values.spec.source.repoURL: ''} : ''}
+      targetRevision: {? {.Values.spec.source.targetRevision: ''} : ''}
   syncPolicy:
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
     automated:
       selfHeal: true
       prune: true

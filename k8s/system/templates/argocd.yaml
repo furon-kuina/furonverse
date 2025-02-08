@@ -2,19 +2,19 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: argocd
-  namespace: {{ .Values.metadata.namespace }}
+  namespace: {? {.Values.metadata.namespace: ''} : ''}
 spec:
   destination:
     namespace: argocd
-    server: {{ .Values.spec.destination.server }}
-  project: {{ .Values.spec.project }}
+    server: {? {.Values.spec.destination.server: ''} : ''}
+  project: {? {.Values.spec.project: ''} : ''}
   source:
     path: k8s/system/manifests/argocd
-    repoURL: {{ .Values.spec.source.repoURL }}
-    targetRevision: {{ .Values.spec.source.targetRevision }}
+    repoURL: {? {.Values.spec.source.repoURL: ''} : ''}
+    targetRevision: {? {.Values.spec.source.targetRevision: ''} : ''}
   syncPolicy:
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
     automated:
       selfHeal: true
       prune: true

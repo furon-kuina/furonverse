@@ -1,20 +1,22 @@
-# apiVersion: argoproj.io/v1alpha1
-# kind: Application
-# metadata:
-#   name: harbor
-#   namespace: {{ .Values.metadata.namespace }}
-# spec:
-#   destination:
-#     namespace: harbor
-#     server: {{ .Values.spec.destination.server }}
-#   project: {{ .Values.spec.project }}
-#   source:
-#     path: k8s/apps/manifests/harbor
-#     repoURL: {{ .Values.spec.source.repoURL }}
-#     targetRevision: {{ .Values.spec.source.targetRevision }}
-#   syncPolicy:
-#     syncOptions:
-#     - CreateNamespace=true
-#     automated:
-#       selfHeal: true
-#       prune: true
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: harbor
+  namespace: {{ .Values.metadata.namespace } }
+spec:
+  destination:
+    namespace: harbor
+    server: { { .Values.spec.destination.server } }
+  project: {{ .Values.spec.project } }
+  sources:
+  - chart: harbor
+    repoURL: https://helm.goharbor.io/harbor
+  - path: k8s/apps/manifests/harbor
+    repoURL: { { .Values.spec.source.repoURL } }
+    targetRevision: {{ .Values.spec.source.targetRevision } }
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true

@@ -11,7 +11,7 @@ spec:
   sources:
   - chart: harbor
     repoURL: https://helm.goharbor.io/harbor
-    targetRevision: 24.3.0
+    targetRevision: 1.16.1
   - path: k8s/apps/manifests/harbor
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}

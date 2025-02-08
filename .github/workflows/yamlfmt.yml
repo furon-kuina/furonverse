@@ -19,6 +19,7 @@ jobs:
         with:
           app_id: ${{ secrets.APP_ID }}
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
@@ -29,13 +30,19 @@ jobs:
         with:
           go-version: '1.23'
 
-      # Step 3: Install google/yamlfmt.
       - name: Install yamlfmt
         run: go install github.com/google/yamlfmt/cmd/yamlfmt@latest
 
       - name: Format YAML files
         run: yamlfmt .
       
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: "1.10.4"
+      
+      - name: terarform fmt
+        run: terraform fmt -recursive
 
       - name: Commit and push changes if any
         run: |
@@ -45,7 +52,7 @@ jobs:
           if [ -n "$(git status --porcelain)" ]; then
             echo "Formatting changes detected. Committing and pushing..."
             git add -A
-            git commit -m "Formatting YAML files..."
+            git commit -m "Auto Format"
             git push
           else
             echo "No formatting changes detected."

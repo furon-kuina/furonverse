@@ -2,45 +2,43 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: couchdb
-  namespace: {{ .Values.metadata.namespace }}
+  namespace: {? {.Values.metadata.namespace: ''} : ''}
 spec:
   destination:
     namespace: couchdb
-    server: {{ .Values.spec.destination.server }}
-  project: {{ .Values.spec.project }}
+    server: {? {.Values.spec.destination.server: ''} : ''}
+  project: {? {.Values.spec.project: ''} : ''}
   sources:
-  - chart: couchdb
-    repoURL: https://apache.github.io/couchdb-helm
-    targetRevision: 4.5.6
-    helm:
-      valuesObject:
-        # https://github.com/apache/couchdb-helm/issues/39
-        couchdbConfig:
-          couchdb:
-            uuid: 2b83ffe8b135492ebc6ff149b57ae9b4
-            max_document_size: 50000000
-          chttpd:
-            require_valid_user: true
-            max_http_request_size: 4294967296
-          chttpd_auth:
-            require_valid_user: true
-          httpd:
-            WWW-Authenticate: Basic realm=\"administrator\"
-            enable_cors: true
-          cors:
-            credentials: true
-            origins: "*"
-        persistentVolume:
-          enabled: true
-        createAdminSecret: false
-
-
-  - path: k8s/services/manifests/couchdb
-    repoURL: {{ .Values.spec.source.repoURL }}
-    targetRevision: {{ .Values.spec.source.targetRevision }}
+    - chart: couchdb
+      repoURL: https://apache.github.io/couchdb-helm
+      targetRevision: 4.5.6
+      helm:
+        valuesObject:
+          # https://github.com/apache/couchdb-helm/issues/39
+          couchdbConfig:
+            couchdb:
+              uuid: 2b83ffe8b135492ebc6ff149b57ae9b4
+              max_document_size: 50000000
+            chttpd:
+              require_valid_user: true
+              max_http_request_size: 4294967296
+            chttpd_auth:
+              require_valid_user: true
+            httpd:
+              WWW-Authenticate: Basic realm=\"administrator\"
+              enable_cors: true
+            cors:
+              credentials: true
+              origins: "*"
+          persistentVolume:
+            enabled: true
+          createAdminSecret: false
+    - path: k8s/services/manifests/couchdb
+      repoURL: {? {.Values.spec.source.repoURL: ''} : ''}
+      targetRevision: {? {.Values.spec.source.targetRevision: ''} : ''}
   syncPolicy:
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
     automated:
       selfHeal: true
       prune: true

@@ -7,3 +7,7 @@ spec:
   source:
     repoURL: https://github.com/furon-kuina/furonverse
     targetRevision: HEAD
+    helm:
+      parameters:
+        - name: global.charts_version
+          value: $ARGOCD_APP_SOURCE_TARGET_REVISION

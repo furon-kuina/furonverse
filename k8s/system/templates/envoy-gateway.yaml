@@ -2,26 +2,26 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: envoy-gateway
-  namespace: {? {.Values.metadata.namespace: ''} : ''}
+  namespace: {{ .Values.metadata.namespace }}
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: envoy-gateway-system
-    server: {? {.Values.spec.destination.server: ''} : ''}
-  project: {? {.Values.spec.project: ''} : ''}
+    server: {{ .Values.spec.destination.server }}
+  project: {{ .Values.spec.project }}
   sources:
-    - repoURL: docker.io/envoyproxy
-      chart: gateway-helm
-      targetRevision: v1.2.4
-      helm:
-        releaseName: eg
-    - path: k8s/system/manifests/envoy-gateway
-      repoURL: {? {.Values.spec.source.repoURL: ''} : ''}
-      targetRevision: {? {.Values.spec.source.targetRevision: ''} : ''}
+  - repoURL: docker.io/envoyproxy
+    chart: gateway-helm
+    targetRevision: v1.2.4
+    helm:
+      releaseName: eg
+  - path: k8s/system/manifests/envoy-gateway
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
   syncPolicy:
     syncOptions:
-      - CreateNamespace=true
+    - CreateNamespace=true
     automated:
       selfHeal: true
       prune: true

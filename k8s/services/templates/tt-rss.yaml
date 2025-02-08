@@ -2,19 +2,19 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: tt-rss
-  namespace: {? {.Values.metadata.namespace: ''} : ''}
+  namespace: {{ .Values.metadata.namespace }}
 spec:
   destination:
     namespace: tt-rss
-    server: {? {.Values.spec.destination.server: ''} : ''}
-  project: {? {.Values.spec.project: ''} : ''}
+    server: {{ .Values.spec.destination.server }}
+  project: {{ .Values.spec.project }}
   sources:
-    - path: k8s/services/manifests/tt-rss
-      repoURL: {? {.Values.spec.source.repoURL: ''} : ''}
-      targetRevision: {? {.Values.spec.source.targetRevision: ''} : ''}
+  - path: k8s/services/manifests/tt-rss
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
   syncPolicy:
     syncOptions:
-      - CreateNamespace=true
+    - CreateNamespace=true
     automated:
       selfHeal: true
       prune: true

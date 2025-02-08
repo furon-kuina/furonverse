@@ -18,7 +18,7 @@ spec:
       releaseName: eg
   - path: k8s/system/manifests/envoy-gateway
     repoURL: {{ .Values.spec.source.repoURL }}
-    targetRevision: {{ .Values.spec.source.targetRevision }}
+    targetRevision: {{ .Values.global.charts_version }}
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

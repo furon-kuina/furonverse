@@ -20,7 +20,7 @@ spec:
           defaultClassReplicaCount: 2
   - path: k8s/system/manifests/longhorn
     repoURL: {{ .Values.spec.source.repoURL }}
-    targetRevision: {{ .Values.spec.source.targetRevision }}
+    targetRevision: {{ .Values.global.charts_version }}
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

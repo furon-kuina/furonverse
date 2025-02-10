@@ -40,3 +40,14 @@ resource "google_project_iam_member" "ar-writer" {
   role    = "roles/artifactregistry.writer"
   member  = "serviceAccount:${google_service_account.ar-github.email}"
 }
+
+# used for pulling image by the cluster
+resource "google_service_account" "cluster" {
+  account_id = "cluster"
+}
+
+resource "google_project_iam_member" "cluster_image_pull" {
+  project = "furonverse"
+  role    = "roles/artifactregistry.reader"
+  member  = "serviceAccount:${google_service_account.cluster.email}"
+}

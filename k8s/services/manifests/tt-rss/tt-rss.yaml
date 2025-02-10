@@ -12,8 +12,6 @@ spec:
       labels:
         app: db
     spec:
-      imagePullSecrets:
-        - name: artifact-registry
       containers:
         - name: db
           image: postgres:15-alpine
@@ -44,6 +42,8 @@ spec:
       labels:
         app: app
     spec:
+      imagePullSecrets:
+        - name: artifact-registry
       containers:
         - name: app
           image: cthulhoo/ttrss-fpm-pgsql-static:59b94a9e

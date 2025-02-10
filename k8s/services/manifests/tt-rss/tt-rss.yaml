@@ -12,6 +12,8 @@ spec:
       labels:
         app: db
     spec:
+      imagePullSecrets:
+        - name: artifact-registry
       containers:
         - name: db
           image: postgres:15-alpine

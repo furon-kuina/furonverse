@@ -94,7 +94,7 @@ spec:
                   key: POSTGRES_PASSWORD
           command: ["/opt/tt-rss/updater.sh"]
         - name: nginx
-          image: asia-northeast1-docker.pkg.dev/furonverse/furonverse/ttrss-nginx-image:v0.1.0
+          image: asia-northeast1-docker.pkg.dev/furonverse/furonverse/ttrss-nginx-image:v0.1.1
           volumeMounts:
             - mountPath: /var/www/html
               name: app-storage

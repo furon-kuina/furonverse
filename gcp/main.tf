@@ -47,7 +47,7 @@ resource "google_service_account" "cluster" {
 }
 
 resource "google_project_iam_member" "cluster_image_pull" {
-    project = "furonverse"
+  project = "furonverse"
   role    = "roles/artifactregistry.reader"
   member  = "serviceAccount:${google_service_account.cluster.email}"
 }

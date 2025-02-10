@@ -30,7 +30,7 @@ resource "google_artifact_registry_repository" "furonverse" {
   format        = "DOCKER"
 }
 
-
+# used for pushing image to Artifact Registry
 resource "google_service_account" "ar-github" {
   account_id = "artifact-registry-github"
 }

@@ -17,11 +17,10 @@ spec:
       initContainers:
       - name: replace-loki-endpoint
         image: ubuntu:22.04
-        commands: ["sed", "-i", "\"s/LOKI_ENDPOINT/$(cat /etc/loki/loki-endpoint)/\"", "/etc/promtail/promtail.yaml"]
+        commands: ["bash", "-c", "mkdir /etc/promtail && touch /etc/promtail/promtail.yaml && sed \"s/LOKI_ENDPOINT/$(cat /etc/loki/loki-endpoint)/\" /etc/setup/promtail.yaml > /etc/promtail/promtail.yaml"]
         volumeMounts:
         - name: promtail-config
           mountPath: /etc/promtail
-          readOnly: false
         - mountPath: /etc/loki
           name: loki-endpoint
           readOnly: true
@@ -39,8 +38,7 @@ spec:
         - name: logs
           mountPath: /var/log
         - name: promtail-config
-          mountPath: /etc/promtail
-          readOnly: false
+          mountPath: /etc/setup
         - mountPath: /var/lib/docker/containers
           name: varlibdockercontainers
           readOnly: true

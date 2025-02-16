@@ -154,7 +154,7 @@ metadata:
 subjects:
     - kind: ServiceAccount
       name: promtail-serviceaccount
-      namespace: default
+      namespace: promtail
 roleRef:
     kind: ClusterRole
     name: promtail-clusterrole

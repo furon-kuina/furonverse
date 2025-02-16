@@ -24,8 +24,8 @@ spec:
         - mountPath: /etc/loki
           name: loki-endpoint
           readOnly: true
-        - mountPath: /etc/promtail
-          name: 
+        - name: promtail
+          mountPath: /etc/promtail
       containers:
       - name: promtail-container
         image: grafana/promtail

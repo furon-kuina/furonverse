@@ -17,7 +17,7 @@ spec:
       initContainers:
       - name: replace-loki-endpoint
         image: ubuntu:22.04
-        commands: ["bash", "-c", "mkdir /etc/promtail && touch /etc/promtail/promtail.yaml && sed \"s/LOKI_ENDPOINT/$(cat /etc/loki/loki-endpoint)/\" /etc/setup/promtail.yaml > /etc/promtail/promtail.yaml"]
+        commands: ["bash", "-c", "touch /etc/promtail/promtail.yaml && ls /etc/loki && ls /etc/setup && ls /etc/promtail && sed \"s/LOKI_ENDPOINT/$(cat /etc/loki/loki-endpoint)/\" /etc/setup/promtail.yaml > /etc/promtail/promtail.yaml"]
         volumeMounts:
         - name: promtail-config
           mountPath: /etc/setup

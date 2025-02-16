@@ -21,7 +21,7 @@ spec:
         volumeMounts:
         - name: promtail-config
           mountPath: /etc/promtail
-        - mountPath: /etc/promtail
+        - mountPath: /etc/loki
           name: loki-endpoint
           readOnly: true
       containers:

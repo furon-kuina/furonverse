@@ -53,14 +53,14 @@ resource "google_project_iam_member" "cluster_image_pull" {
 }
 
 resource "google_compute_instance" "free_tier" {
-  name = "free-tier"
+  name         = "free-tier"
   machine_type = "e2-micro"
-  zone = "us-west1-a"
+  zone         = "us-west1-a"
   boot_disk {
     initialize_params {
       image = "debian-12-bookworm-v20250212"
-      size = "30"
-      type = "pd-standard"
+      size  = "30"
+      type  = "pd-standard"
     }
   }
   network_interface {

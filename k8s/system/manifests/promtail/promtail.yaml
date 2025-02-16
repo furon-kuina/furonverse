@@ -57,7 +57,7 @@ spec:
           name: promtail-config
       - name: loki-endpoint
         secret:
-          name: loki-endpoint
+          secretName: loki-endpoint
 --- # configmap.yaml
 apiVersion: v1
 kind: ConfigMap

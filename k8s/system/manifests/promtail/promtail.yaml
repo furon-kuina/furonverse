@@ -24,6 +24,8 @@ spec:
         - mountPath: /etc/loki
           name: loki-endpoint
           readOnly: true
+        - mountPath: /etc/promtail
+          name: 
       containers:
       - name: promtail-container
         image: grafana/promtail
@@ -45,6 +47,8 @@ spec:
         - mountPath: /etc/loki
           name: loki-endpoint
           readOnly: true
+        - name: promtail
+          mountPath: /etc/promtail
       volumes:
       - name: logs
         hostPath:
@@ -58,6 +62,8 @@ spec:
       - name: loki-endpoint
         secret:
           secretName: loki-endpoint
+      - name: promtail
+        emptyDir: {} 
 --- # configmap.yaml
 apiVersion: v1
 kind: ConfigMap

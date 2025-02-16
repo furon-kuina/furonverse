@@ -20,7 +20,7 @@ spec:
         commands: ["bash", "-c", "mkdir /etc/promtail && touch /etc/promtail/promtail.yaml && sed \"s/LOKI_ENDPOINT/$(cat /etc/loki/loki-endpoint)/\" /etc/setup/promtail.yaml > /etc/promtail/promtail.yaml"]
         volumeMounts:
         - name: promtail-config
-          mountPath: /etc/promtail
+          mountPath: /etc/setup
         - mountPath: /etc/loki
           name: loki-endpoint
           readOnly: true

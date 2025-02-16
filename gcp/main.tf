@@ -51,3 +51,20 @@ resource "google_project_iam_member" "cluster_image_pull" {
   role    = "roles/artifactregistry.reader"
   member  = "serviceAccount:${google_service_account.cluster.email}"
 }
+
+resource "google_compute_instance" "free_tier" {
+  name = "free-tier"
+  machine_type = "e2-micro"
+  zone = "us-west1-a"
+  boot_disk {
+    initialize_params {
+      image = "debian-12-bookworm-v20250212"
+      size = "30"
+      type = "pd-standard"
+    }
+  }
+  network_interface {
+    network = "default"
+    access_config {}
+  }
+}

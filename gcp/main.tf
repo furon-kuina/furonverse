@@ -68,3 +68,20 @@ resource "google_compute_instance" "free_tier" {
     access_config {}
   }
 }
+
+resource "google_service_account" "ansible" {
+  account_id = "ansible"
+}
+
+resource "google_project_iam_member" "ansible_gcp_provisioning_compute_admin" {
+  project = "furonverse"
+  role    = "roles/compute.admin"
+  member  = "serviceAccount:${google_service_account.ansible.email}"
+}
+
+# GCE OSログイン用に追加している
+resource "google_project_iam_member" "ansible_gcp_provisioning_service_account_user" {
+  project = "furonverse"
+  role    = "roles/iam.serviceAccountUser"
+  member  = "serviceAccount:${google_service_account.ansible.email}"
+}

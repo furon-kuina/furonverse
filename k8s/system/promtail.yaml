@@ -2,18 +2,18 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: promtail
-  namespace: {{ .Values.metadata.namespace }}
+  namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: promtail
-    server: {{ .Values.spec.destination.server }}
-  project: {{ .Values.spec.project }}
+    server: https://kubernetes.default.svc
+  project: default
   sources:
   - path: k8s/system/manifests/promtail
-    repoURL: {{ .Values.spec.source.repoURL }}
-    targetRevision: {{ .Values.global.charts_version }}
+    repoURL: https://github.com/furon-kuina/furonverse
+    targetRevision: HEAD
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

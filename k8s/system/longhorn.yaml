@@ -4,26 +4,26 @@ metadata:
   name: longhorn
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: longhorn-system
     server: https://kubernetes.default.svc
   project: default
   sources:
-  - repoURL: https://charts.longhorn.io
-    chart: longhorn
-    targetRevision: "1.5.1"
-    helm:
-      valuesObject:
-        persistence:
-          defaultClassReplicaCount: 2
-  - path: k8s/system/manifests/longhorn
-    repoURL: https://github.com/furon-kuina/furonverse
-    targetRevision: HEAD
+    - repoURL: https://charts.longhorn.io
+      chart: longhorn
+      targetRevision: "1.5.1"
+      helm:
+        valuesObject:
+          persistence:
+            defaultClassReplicaCount: 2
+    - path: k8s/system/manifests/longhorn
+      repoURL: https://github.com/furon-kuina/furonverse
+      targetRevision: HEAD
   syncPolicy:
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
     automated:
       selfHeal: true
       prune: true

@@ -4,19 +4,19 @@ metadata:
   name: promtail
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
     namespace: promtail
     server: https://kubernetes.default.svc
   project: default
   sources:
-  - path: k8s/system/manifests/promtail
-    repoURL: https://github.com/furon-kuina/furonverse
-    targetRevision: HEAD
+    - path: k8s/system/manifests/promtail
+      repoURL: https://github.com/furon-kuina/furonverse
+      targetRevision: HEAD
   syncPolicy:
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
     automated:
       selfHeal: true
       prune: true

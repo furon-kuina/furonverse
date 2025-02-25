@@ -1,5 +1,5 @@
 # copied from https://grafana.com/docs/loki/latest/send-data/promtail/installation/
---- # Daemonset.yaml
+# Daemonset.yaml
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
@@ -15,60 +15,61 @@ spec:
     spec:
       serviceAccount: promtail-serviceaccount
       initContainers:
-      - name: replace-loki-endpoint
-        image: ubuntu:22.04
-        command: ["bash", "-c", "touch /etc/promtail/promtail.yaml && ls /etc/loki && ls /etc/setup && ls /etc/promtail && sed \"s/LOKI_ENDPOINT/$(cat /etc/loki/loki-endpoint)/\" /etc/setup/promtail.yaml > /etc/promtail/promtail.yaml"]
-        volumeMounts:
-        - name: promtail-config
-          mountPath: /etc/setup
-        - mountPath: /etc/loki
-          name: loki-endpoint
-          readOnly: true
-        - name: promtail
-          mountPath: /etc/promtail
+        - name: replace-loki-endpoint
+          image: ubuntu:22.04
+          command: ["bash", "-c", "touch /etc/promtail/promtail.yaml && ls /etc/loki && ls /etc/setup && ls /etc/promtail && sed \"s/LOKI_ENDPOINT/$(cat /etc/loki/loki-endpoint)/\" /etc/setup/promtail.yaml > /etc/promtail/promtail.yaml"]
+          volumeMounts:
+            - name: promtail-config
+              mountPath: /etc/setup
+            - mountPath: /etc/loki
+              name: loki-endpoint
+              readOnly: true
+            - name: promtail
+              mountPath: /etc/promtail
       tolerations:
-      - key: "node-role.kubernetes.io/control-plane"
-        operator: "Exists"
-        effect: "NoSchedule"
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Exists"
+          effect: "NoSchedule"
       containers:
-      - name: promtail-container
-        image: grafana/promtail
-        args:
-        - -config.file=/etc/promtail/promtail.yaml
-        env: 
-        - name: 'HOSTNAME' # needed when using kubernetes_sd_configs
-          valueFrom:
-            fieldRef:
-              fieldPath: 'spec.nodeName'
-        volumeMounts:
-        - name: logs
-          mountPath: /var/log
-        - name: promtail-config
-          mountPath: /etc/setup
-        - mountPath: /var/lib/docker/containers
-          name: varlibdockercontainers
-          readOnly: true
-        - mountPath: /etc/loki
-          name: loki-endpoint
-          readOnly: true
-        - name: promtail
-          mountPath: /etc/promtail
+        - name: promtail-container
+          image: grafana/promtail
+          args:
+            - -config.file=/etc/promtail/promtail.yaml
+          env:
+            - name: 'HOSTNAME' # needed when using kubernetes_sd_configs
+              valueFrom:
+                fieldRef:
+                  fieldPath: 'spec.nodeName'
+          volumeMounts:
+            - name: logs
+              mountPath: /var/log
+            - name: promtail-config
+              mountPath: /etc/setup
+            - mountPath: /var/lib/docker/containers
+              name: varlibdockercontainers
+              readOnly: true
+            - mountPath: /etc/loki
+              name: loki-endpoint
+              readOnly: true
+            - name: promtail
+              mountPath: /etc/promtail
       volumes:
-      - name: logs
-        hostPath:
-          path: /var/log
-      - name: varlibdockercontainers
-        hostPath:
-          path: /var/lib/docker/containers
-      - name: promtail-config
-        configMap:
-          name: promtail-config
-      - name: loki-endpoint
-        secret:
-          secretName: loki-endpoint
-      - name: promtail
-        emptyDir: {} 
---- # configmap.yaml
+        - name: logs
+          hostPath:
+            path: /var/log
+        - name: varlibdockercontainers
+          hostPath:
+            path: /var/lib/docker/containers
+        - name: promtail-config
+          configMap:
+            name: promtail-config
+        - name: loki-endpoint
+          secret:
+            secretName: loki-endpoint
+        - name: promtail
+          emptyDir: {}
+---
+# configmap.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -123,8 +124,8 @@ data:
             - __meta_kubernetes_pod_uid
             - __meta_kubernetes_pod_container_name
           target_label: __path__
-
---- # Clusterrole.yaml
+---
+# Clusterrole.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
@@ -132,30 +133,30 @@ metadata:
 rules:
   - apiGroups: [""]
     resources:
-    - nodes
-    - services
-    - pods
+      - nodes
+      - services
+      - pods
     verbs:
-    - get
-    - watch
-    - list
-
---- # ServiceAccount.yaml
+      - get
+      - watch
+      - list
+---
+# ServiceAccount.yaml
 apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: promtail-serviceaccount
-
---- # Rolebinding.yaml
+---
+# Rolebinding.yaml
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: promtail-clusterrolebinding
 subjects:
-    - kind: ServiceAccount
-      name: promtail-serviceaccount
-      namespace: promtail
+  - kind: ServiceAccount
+    name: promtail-serviceaccount
+    namespace: promtail
 roleRef:
-    kind: ClusterRole
-    name: promtail-clusterrole
-    apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: promtail-clusterrole
+  apiGroup: rbac.authorization.k8s.io

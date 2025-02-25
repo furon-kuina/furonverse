@@ -9,39 +9,39 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   sources:
-  - chart: kube-prometheus-stack
-    repoURL: https://prometheus-community.github.io/helm-charts
-    targetRevision: 68.3.2
-    helm:
-      valuesObject:
-        grafana:
-          persistence:
-            enabled: true
-            type: sts
-            storageClassName: longhorn
-            accessModes:
-              - ReadWriteOnce
-            size: 1Gi
-            finalizers:
-              - kubernetes.io/pvc-protection
-        prometheus:
-          prometheusSpec:
-            # PVC is only created when prometheus operator is created
-            storageSpec:
-              volumeClaimTemplate:
-                spec:
-                  storageClassName: longhorn
-                  accessModes: 
-                  - ReadWriteOnce
-                  resources:
-                    requests:
-                      storage: 10Gi
-  - path: k8s/system/manifests/prometheus-stack
-    repoURL: https://github.com/furon-kuina/furonverse
-    targetRevision: HEAD
+    - chart: kube-prometheus-stack
+      repoURL: https://prometheus-community.github.io/helm-charts
+      targetRevision: 68.3.2
+      helm:
+        valuesObject:
+          grafana:
+            persistence:
+              enabled: true
+              type: sts
+              storageClassName: longhorn
+              accessModes:
+                - ReadWriteOnce
+              size: 1Gi
+              finalizers:
+                - kubernetes.io/pvc-protection
+          prometheus:
+            prometheusSpec:
+              # PVC is only created when prometheus operator is created
+              storageSpec:
+                volumeClaimTemplate:
+                  spec:
+                    storageClassName: longhorn
+                    accessModes:
+                      - ReadWriteOnce
+                    resources:
+                      requests:
+                        storage: 10Gi
+    - path: k8s/system/manifests/prometheus-stack
+      repoURL: https://github.com/furon-kuina/furonverse
+      targetRevision: HEAD
   syncPolicy:
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
     automated:
       selfHeal: true
       prune: true

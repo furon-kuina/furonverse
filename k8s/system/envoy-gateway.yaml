@@ -11,17 +11,17 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   sources:
-  - repoURL: docker.io/envoyproxy
-    chart: gateway-helm
-    targetRevision: v1.2.4
-    helm:
-      releaseName: eg
-  - path: k8s/system/manifests/envoy-gateway
-    repoURL: https://github.com/furon-kuina/furonverse
-    targetRevision: HEAD
+    - repoURL: docker.io/envoyproxy
+      chart: gateway-helm
+      targetRevision: v1.2.4
+      helm:
+        releaseName: eg
+    - path: k8s/system/manifests/envoy-gateway
+      repoURL: https://github.com/furon-kuina/furonverse
+      targetRevision: HEAD
   syncPolicy:
     syncOptions:
-    - CreateNamespace=true
+      - CreateNamespace=true
     automated:
       selfHeal: true
       prune: true

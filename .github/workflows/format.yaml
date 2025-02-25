@@ -27,8 +27,12 @@ jobs:
           terraform_version: "1.10.4"
       - name: terarform fmt
         run: terraform fmt -recursive
+      - name: Set up Go
+        uses: actions/setup-go@v5
+      - name: run yamlfmt
+        run: go install github.com/google/yamlfmt/cmd/yamlfmt@latest && yamlfmt .
       - name: Commit and push changes if any
-        run: |
+        run: |-
           git config --global user.email "github-actions@github.com"
           git config --global user.name "github-actions"
           # Check if any files have changed

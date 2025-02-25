@@ -2,16 +2,16 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: cloudflared
-  namespace: {{ .Values.metadata.namespace }}
+  namespace: argocd
 spec:
   destination:
     namespace: cloudflared
-    server: {{ .Values.spec.destination.server }}
-  project: {{ .Values.spec.project }}
+    server: https://kubernetes.default.svc
+  project: default
   source:
     path: k8s/system/manifests/cloudflared
-    repoURL: {{ .Values.spec.source.repoURL }}
-    targetRevision: {{ .Values.global.charts_version }}
+    repoURL: https://github.com/furon-kuina/furonverse
+    targetRevision: HEAD
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

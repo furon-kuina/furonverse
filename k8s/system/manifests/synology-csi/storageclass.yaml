@@ -6,7 +6,7 @@ metadata:
   name: synology-iscsi
 provisioner: csi.san.synology.com
 parameters:
-  fsType: btrfs
+  csi.storage.k8s.io/fstype: btrfs
   dsm: '192.168.10.6'
   location: /volume1
   type: thin

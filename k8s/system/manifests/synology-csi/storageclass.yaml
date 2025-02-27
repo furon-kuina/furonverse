@@ -11,5 +11,5 @@ parameters:
   location: /volume1
   type: thin
   protocol: iscsi
-reclaimPolicy: Delete
+reclaimPolicy: Retain
 allowVolumeExpansion: true

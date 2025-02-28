@@ -5,11 +5,5 @@ metadata:
     storageclass.kubernetes.io/is-default-class: "false"
   name: synology-iscsi
 provisioner: csi.san.synology.com
-parameters:
-  csi.storage.k8s.io/fstype: btrfs
-  dsm: '192.168.10.6'
-  location: /volume1
-  type: thin
-  protocol: iscsi
 reclaimPolicy: Retain
 allowVolumeExpansion: true

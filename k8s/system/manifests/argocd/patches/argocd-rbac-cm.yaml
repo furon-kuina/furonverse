@@ -5,4 +5,4 @@ metadata:
   namespace: argocd
 data:
   policy.csv: |-
-    g, tenma.edamura@gmail.com, role:admin
+    g, group:tenma.edamura@gmail.com, role:admin

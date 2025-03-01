@@ -6,6 +6,7 @@ resources:
   - ./ns.yaml
   - ./appproject.yaml
   - ./httproute.yaml
+  - ./externalsecrets.yaml
   # TODO: create user & disable admin login
 patches: # adjusted to the cluster's worker node count
   - target:
@@ -30,3 +31,7 @@ patches: # adjusted to the cluster's worker node count
     target:
       kind: ConfigMap
       name: argocd-cmd-params-cm
+  - path: ./patches/argocd-rbac-cm.yaml
+    target:
+      kind: ConfigMap
+      name: argocd-rbac-cm

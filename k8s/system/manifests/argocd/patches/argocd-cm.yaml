@@ -7,6 +7,15 @@ metadata:
   name: argocd-cm
 data:
   url: https://argocd.furonverse.com
+  dex.config: |
+    connectors:
+    - config:
+        issuer: https://accounts.google.com
+        clientID: $google-client-id
+        clientSecret: $google-client-secret
+      type: oidc
+      id: google
+      name: Google
   # Fix to ArgoCD stucking in Progressing state
   # cf: https://sublimer.hatenablog.com/entry/2022/07/24/162750
   resource.customizations.health.Service: |

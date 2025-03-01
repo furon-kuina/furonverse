@@ -10,12 +10,11 @@ data:
   dex.config: |
     connectors:
     - config:
-        issuer: https://accounts.google.com
-        clientID: $google-client-id
-        clientSecret: $google-client-secret
-      type: oidc
-      id: google
-      name: Google
+        clientID: $github-client-id
+        clientSecret: $github-client-secret
+      type: github
+      id: github
+      name: GitHub
   # Fix to ArgoCD stucking in Progressing state
   # cf: https://sublimer.hatenablog.com/entry/2022/07/24/162750
   resource.customizations.health.Service: |

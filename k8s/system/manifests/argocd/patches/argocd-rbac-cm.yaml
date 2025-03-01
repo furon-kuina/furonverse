@@ -5,4 +5,5 @@ metadata:
   namespace: argocd
 data:
   policy.csv: |-
-    g, group:tenma.edamura@gmail.com, role:admin
+    g, furonverse:furon, role:admin
+  scopes: '[groups, email]'

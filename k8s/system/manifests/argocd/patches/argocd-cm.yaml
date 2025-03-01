@@ -11,8 +11,8 @@ data:
     connectors:
     - config:
         issuer: https://accounts.google.com
-        clientID: $github-client-id
-        clientSecret: $github-client-secret
+        clientID: $google-client-id
+        clientSecret: $google-client-secret
       type: oidc
       id: google
       name: Google

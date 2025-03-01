@@ -7,6 +7,4 @@ data:
   policy.csv: |-
     g, furonverse:furon, role:admin
     g, tenma.edamura@gmail.com, role:admin
-    g, furonverse:tenma.edamura@gmail.com, role:admin
-    g, furonverse:Furon, role:admin
   scopes: '[groups, email]'

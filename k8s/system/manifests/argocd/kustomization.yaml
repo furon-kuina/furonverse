@@ -6,6 +6,7 @@ resources:
   - ./ns.yaml
   - ./appproject.yaml
   - ./httproute.yaml
+  - ./externalsecrets.yaml
   # TODO: create user & disable admin login
 patches: # adjusted to the cluster's worker node count
   - target:

@@ -4,5 +4,5 @@ metadata:
   name: argocd-rbac-cm
   namespace: argocd
 data:
-  policy.csv: |
+  policy.csv: |-
     g, tenma.edamura@gmail.com, role:admin

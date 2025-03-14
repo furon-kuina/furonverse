@@ -19,13 +19,13 @@ spec:
         - image: asia-northeast1-docker.pkg.dev/furonverse/furonverse/imagepullexternalsecrets-controller:v0.1.0
           name: ipes-controller
           env:
-          - name: DESIRED_EXTERNAL_SECRET
-            valueFrom:
-              configMapKeyRef:
-                key: desired-ipes
-                name: ipes-cm
-          - name: TRIGGER_SECRET_NAME
-            valueFrom:
-              configMapKeyRef:
-                key: trigger-secret-name
-                name: artifact-registry-sa-key
+            - name: DESIRED_EXTERNAL_SECRET
+              valueFrom:
+                configMapKeyRef:
+                  key: desired-ipes
+                  name: ipes-cm
+            - name: TRIGGER_SECRET_NAME
+              valueFrom:
+                configMapKeyRef:
+                  key: trigger-secret-name
+                  name: artifact-registry-sa-key

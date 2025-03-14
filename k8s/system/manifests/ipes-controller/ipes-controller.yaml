@@ -16,7 +16,7 @@ spec:
         pod: ipes-controller
     spec:
       imagePullSecrets:
-        - artifact-registry-sa-key
+        - name: artifact-registry-sa-key
       containers:
         - image: asia-northeast1-docker.pkg.dev/furonverse/furonverse/imagepullexternalsecrets-controller:v0.1.0
           name: ipes-controller

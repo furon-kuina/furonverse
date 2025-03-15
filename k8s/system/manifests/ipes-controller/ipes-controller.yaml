@@ -15,6 +15,7 @@ spec:
       labels:
         pod: ipes-controller
     spec:
+      serviceAccountName: ipes-controller-sa
       imagePullSecrets:
         - name: artifact-registry-sa-key
       containers:

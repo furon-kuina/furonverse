@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: desired-ipes
+  name: ipes-cm
   namespace: kube-system
 data:
   desired-ipes: |

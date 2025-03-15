@@ -4,7 +4,7 @@ metadata:
   name: ipes-cm
   namespace: kube-system
 data:
-  desired-ipes: |
+  desired-ipes: |-
     apiVersion: external-secrets.io/v1beta1
     kind: ExternalSecret
     metadata:

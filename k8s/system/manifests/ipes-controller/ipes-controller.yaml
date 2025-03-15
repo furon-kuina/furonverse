@@ -27,7 +27,4 @@ spec:
                   key: desired-ipes
                   name: ipes-cm
             - name: TRIGGER_SECRET_NAME
-              valueFrom:
-                configMapKeyRef:
-                  key: trigger-secret-name
-                  name: artifact-registry-sa-key
+              value: artifact-registry-sa-key

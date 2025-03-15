@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ipes-cm
+  namespace: kube-system
+data:
+  desired-ipes: |-
+    apiVersion: external-secrets.io/v1beta1
+    kind: ExternalSecret
+    metadata:
+      name: artifact-registry-sa-key
+    spec:
+      refreshInterval: 1h
+      secretStoreRef:
+        kind: ClusterSecretStore
+        name: gcpsm
+      target:
+        name: artifact-registry-sa-key
+      data:
+        - secretKey: artifact-registry-sa-key
+          remoteRef:
+            key: k8s
+            property: artifact-registry-sa-key

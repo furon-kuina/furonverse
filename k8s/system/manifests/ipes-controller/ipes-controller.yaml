@@ -19,7 +19,7 @@ spec:
       imagePullSecrets:
         - name: artifact-registry-sa-key
       containers:
-        - image: asia-northeast1-docker.pkg.dev/furonverse/furonverse/imagepullexternalsecrets-controller:v0.1.2
+        - image: asia-northeast1-docker.pkg.dev/furonverse/furonverse/imagepullexternalsecrets-controller:v0.1.3
           name: ipes-controller
           env:
             - name: DESIRED_EXTERNAL_SECRET

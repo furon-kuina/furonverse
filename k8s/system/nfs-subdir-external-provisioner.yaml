@@ -15,9 +15,10 @@ spec:
     chart: nfs-subdir-external-provisioner
     targetRevision: 4.0.18
     helm:
-      nfs:
-        server: http://192.168.10.6:5000/
-        path: /volume1/furonverse
+      valuesObject:
+        nfs:
+          server: http://192.168.10.6:5000/
+          path: /volume1/furonverse
   syncPolicy:
     syncOptions:
       - CreateNamespace=true

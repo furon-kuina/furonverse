@@ -14,20 +14,20 @@ metadata:
   namespace: minio
 spec:
   containers:
-  - name: minio
-    image: quay.io/minio/minio:latest
-    command:
-    - /bin/bash
-    - -c
-    args: 
-    - minio server /data --console-address :9090
-    volumeMounts:
-    - mountPath: /data
-      name: minio-volume
+    - name: minio
+      image: quay.io/minio/minio:latest
+      command:
+        - /bin/bash
+        - -c
+      args:
+        - minio server /data --console-address :9090
+      volumeMounts:
+        - mountPath: /data
+          name: minio-volume
   volumes:
-  - name: minio-volume
-    persistentVolumeClaim:
-      claimName: minio-pvc
+    - name: minio-volume
+      persistentVolumeClaim:
+        claimName: minio-pvc
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim

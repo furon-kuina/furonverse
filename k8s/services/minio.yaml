@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: minio
+  namespace: argocd
+spec:
+  destination:
+    namespace: minio
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: k8s/services/manifests/minio
+    repoURL: https://github.com/furon-kuina/furonverse
+    targetRevision: HEAD
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true

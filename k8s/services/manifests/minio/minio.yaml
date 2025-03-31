@@ -71,7 +71,7 @@ spec:
         runAsGroup: 1000
         runAsNonRoot: true
         runAsUser: 1000
-      servers: 2
+      servers: 1
       tolerations: []
       topologySpreadConstraints: []
       volumeClaimTemplate:
@@ -86,7 +86,7 @@ spec:
               storage: 1Ti
           storageClassName: nfs-client
         status: {}
-      volumesPerServer: 1
+      volumesPerServer: 2
   priorityClassName: ""
   requestAutoCert: true
   serviceAccountName: ""

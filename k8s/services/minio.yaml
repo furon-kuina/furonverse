@@ -21,6 +21,10 @@ spec:
             defaultStorageClass: nfs-client
           persistence:
             size: 256Gi
+          auth:
+            existingSecret: minio-secret
+            rootUserSecretKey: minio-root-user
+            rootPasswordSecretKey: minio-root-password
   syncPolicy:
     automated:
       selfHeal: true

@@ -9,18 +9,18 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   sources:
-    - path: k8s/services/manifests/minio
-      repoURL: https://github.com/furon-kuina/furonverse
-      targetRevision: HEAD
-    - chart: minio
-      repoURL: registry-1.docker.io/bitnamicharts
-      targetRevision: 16.0.0
-      helm:
-        valuesObject:
-          global:
-            defaultStorageClass: nfs-client
-          persistence:
-            size: 128Gi
+  - path: k8s/services/manifests/minio
+    repoURL: https://github.com/furon-kuina/furonverse
+    targetRevision: HEAD
+  - chart: minio
+    repoURL: registry-1.docker.io/bitnamicharts
+    targetRevision: 16.0.0
+    helm:
+      valuesObject:
+        global:
+          defaultStorageClass: nfs-client
+        persistence:
+          size: 256Gi
   syncPolicy:
     automated:
       selfHeal: true

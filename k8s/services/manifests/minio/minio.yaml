@@ -83,7 +83,7 @@ spec:
             - ReadWriteOnce
           resources:
             requests:
-              storage: 1Ti
+              storage: 256Gi
           storageClassName: nfs-client
         status: {}
       volumesPerServer: 2

@@ -1,0 +1,41 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: nextcloud
+  namespace: argocd
+spec:
+  destination:
+    namespace: nextcloud
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+    - chart: nextcloud
+      repoURL: https://nextcloud.github.io/helm/
+      targetRevision: 6.6.9
+      helm:
+        valuesObject:
+          nextcloud:
+            existingSecret:
+              enabled: true
+              secretName: nextcloud-secret
+              usernameKey: username
+              passwordKey: password
+            objectStore:
+              s3:
+                enabled: true
+                host: minio.minio.svc.cluster.local
+                bucket: nextcloud
+                port: 9000
+                existingSecret: nextcloud-secret
+                secretKeys:
+                  accesssKey: minio-accesskey
+                  secretKey: minio-secretkey
+    - path: k8s/services/manifests/nextcloud
+      repoURL: https://github.com/furon-kuina/furonverse
+      targetRevision: HEAD
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      selfHeal: true
+      prune: true

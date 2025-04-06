@@ -27,8 +27,8 @@ spec:
           prometheus:
             prometheusSpec:
               remoteWrite:
-              - url: https://prometheus-prod-49-prod-ap-northeast-0.grafana.net/api/prom/push
-                basicAuth:
+                - url: https://prometheus-prod-49-prod-ap-northeast-0.grafana.net/api/prom/push
+                  basicAuth:
                     username:
                       name: kube-prometheus-secret
                       key: prometheus-username

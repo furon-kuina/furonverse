@@ -26,16 +26,17 @@ spec:
                 - kubernetes.io/pvc-protection
           prometheus:
             prometheusSpec:
-              # PVC is only created when prometheus operator is created
-              storageSpec:
-                volumeClaimTemplate:
-                  spec:
-                    storageClassName: longhorn
-                    accessModes:
-                      - ReadWriteOnce
-                    resources:
-                      requests:
-                        storage: 10Gi
+              remoteWrite:
+              - url: https://prometheus-prod-49-prod-ap-northeast-0.grafana.net/api/prom/push
+                basicAuth:
+                    username:
+                      name: kube-prometheus-secret
+                      key: prometheus-username
+                    password:
+                      name: kube-prometheus-secret
+                      key: prometheus-password
+              replicaExternalLabelName: "__replica__"
+              externalLabels: {cluster: "furonverse"}
     - path: k8s/system/manifests/prometheus-stack
       repoURL: https://github.com/furon-kuina/furonverse
       targetRevision: HEAD
